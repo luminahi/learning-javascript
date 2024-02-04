@@ -1,6 +1,5 @@
 import { createServer } from "net";
 import { existsSync, unlinkSync } from "fs";
-import { exit } from "process";
 
 const socketPath = "custom.socket";
 
@@ -10,17 +9,19 @@ if (existsSync(socketPath)) {
 }
 
 const server = createServer((socket) => {
-    socket.on("connect", () => {
-        console.log("client connected");
-    });
-
     socket.on("data", (data) => {
-        console.log("data received: ", data.toString());
-        socket.write("ok!");
+        let dataParts = data.toString().split("@", 2);
+        if (dataParts[1] === "exit") {
+            console.log(`[${dataParts[0]}]: `, "[disconnected]");
+            socket.destroy();
+        } else {
+            console.log(`[${dataParts[0]}]: `, dataParts[1]);
+            socket.write("ok");
+        }
     });
 
     socket.on("end", () => {
-        console.log("connection ended");
+        console.log("client disconnected");
     });
 });
 
