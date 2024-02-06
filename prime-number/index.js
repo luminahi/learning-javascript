@@ -14,13 +14,13 @@ function isPrimeNumber(value) {
 }
 
 /**
- *
+ * return the sum of all prime numbers from 2 to size number
  * @param {number} size
+ * @returns {number}
  */
 function calcPrimeNumbers(size) {
-    const arr = new Array(size).fill(0);
-
-    return arr
+    return Array(size)
+        .fill(0)
         .map((_, index) => index)
         .filter((value) => isPrimeNumber(value))
         .reduce((previous, current) => previous + current);
