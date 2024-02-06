@@ -1,17 +1,4 @@
 /**
- *
- * @param {number} size
- * @returns {number[]}
- */
-function generateNumberArray(size) {
-    let arr = new Array(size);
-    for (let i = 0; i < size; i++) {
-        arr[i] = i;
-    }
-    return arr;
-}
-
-/**
  * verify if is a prime number
  * @param {number} value
  * @returns {boolean}
@@ -26,8 +13,17 @@ function isPrimeNumber(value) {
     return true;
 }
 
-const result = generateNumberArray(1000)
-    .filter((value) => isPrimeNumber(value))
-    .reduce((previous, current) => previous + current);
+/**
+ *
+ * @param {number} size
+ */
+function calcPrimeNumbers(size) {
+    const arr = new Array(size).fill(0);
 
-console.log(result);
+    return arr
+        .map((_, index) => index)
+        .filter((value) => isPrimeNumber(value))
+        .reduce((previous, current) => previous + current);
+}
+
+console.log(calcPrimeNumbers(1000));
