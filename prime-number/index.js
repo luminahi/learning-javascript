@@ -1,5 +1,4 @@
 /**
- * verify if is a prime number
  * @param {number} value
  * @returns {boolean}
  */
