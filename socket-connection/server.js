@@ -25,6 +25,22 @@ const server = createServer((socket) => {
     });
 });
 
+process.on("SIGTERM", () => {
+    if (existsSync(socketPath)) {
+        unlinkSync(socketPath);
+    }
+    console.log("\nexiting...");
+    process.exit(0);
+});
+
+process.on("SIGINT", () => {
+    if (existsSync(socketPath)) {
+        unlinkSync(socketPath);
+    }
+    console.log("\nexiting...");
+    process.exit(0);
+});
+
 server.listen(socketPath, () => {
     console.log("server listening on unix socket: ", socketPath);
 });
