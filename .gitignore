@@ -2,3 +2,4 @@ node_modules/
 *.socket
 playground/
 
+out.js
