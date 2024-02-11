@@ -1,6 +1,7 @@
 import amqp from "amqplib/callback_api.js";
 
 amqp.connect("amqp://localhost", (err0, connection) => {
+    console.log("Waiting for messages. To exit press CTRL+C");
     if (err0) throw err0;
 
     connection.createChannel((err1, channel) => {
@@ -8,7 +9,12 @@ amqp.connect("amqp://localhost", (err0, connection) => {
 
         const queue = "task_queue";
 
-        channel.assertQueue(queue, { durable: false });
+        channel.assertQueue(queue, { durable: true }, (err2, info) => {
+            if (err2) throw err2;
+            console.log(info);
+        });
+
+        channel.prefetch(1);
 
         channel.consume(
             queue,
@@ -17,10 +23,19 @@ amqp.connect("amqp://localhost", (err0, connection) => {
                 const seconds = parts.length - 1;
 
                 setTimeout(() => {
-                    console.log(`${parts[0]} task ended!`);
+                    console.log(`[${parts[0]}] => task ended!`);
+                    channel.ack(msg);
                 }, seconds * 1000);
             },
-            { noAck: true }
+            { noAck: false }
         );
+    });
+
+    process.on("SIGINT", () => {
+        connection.close((err) => {
+            if (err) console.log(err);
+        });
+        console.log("\ngracefully exiting...");
+        process.exit(0);
     });
 });
