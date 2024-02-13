@@ -10,7 +10,7 @@ amqp.connect("amqp://localhost", (err0, connection) => {
         const msg = process.argv.slice(2).join(" ") || "default message";
 
         channel.assertExchange(exchange, "fanout", { durable: false });
-        channel.publish("logs", "", Buffer.from(msg));
+        channel.publish(exchange, "", Buffer.from(msg));
         console.log("[x] Sent %s", msg);
     });
 
