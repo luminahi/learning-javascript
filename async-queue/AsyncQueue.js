@@ -7,32 +7,32 @@ class AsyncQueue {
 
     async execute() {
         while (this.queue.length > 0) {
-            const task = await this.dequeue();
-            console.log(task);
+            const task = this.#dequeue();
+            await task();
         }
     }
 
-    /**
-     *
-     * @param {AsyncTask} task
-     */
     enqueue(task) {
-        const promisifiedTask = new Promise((resolve) => {
-            setTimeout(() => {
-                resolve(task.message);
-            }, task.executionTime);
-        });
+        const promisifiedTask = () => {
+            return new Promise((resolve) => {
+                console.log("starting %s", task.name);
+                delay(task.time).then(() => {
+                    console.log("%s completed", task.name);
+                    resolve();
+                });
+            });
+        };
+
         this.queue.unshift(promisifiedTask);
-        console.log(
-            "task [%s] started with execution time of [%s seconds]",
-            task.message,
-            task.executionTime / 1000
-        );
     }
 
-    dequeue() {
+    #dequeue() {
         return this.queue.pop();
     }
+}
+
+function delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export { AsyncQueue };

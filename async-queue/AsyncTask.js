@@ -1,10 +1,10 @@
 class AsyncTask {
-    executionTime;
-    message;
+    name;
+    time;
 
-    constructor(message, executionTime = 1000) {
-        this.message = message;
-        this.executionTime = executionTime;
+    constructor(name, time = 1000) {
+        this.name = name;
+        this.time = time;
     }
 }
 
