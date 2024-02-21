@@ -1,6 +1,6 @@
 import amqp from "amqplib/callback_api.js";
 
-const size = 5;
+const size = 50_000;
 const messages = Array(size)
     .fill(0)
     .map((_, index) => `message: ${index}`);
@@ -12,19 +12,22 @@ amqp.connect("amqp://localhost", (connErr, connection) => {
         if (channelErr) throw channelErr;
 
         const queue = "t2_queue";
-
         channel.assertQueue(queue, { durable: false });
 
-        channel.sendToQueue(queue, Buffer.from(messages.pop()));
-        channel.waitForConfirms((waitErr) => {
-            if (waitErr) {
-                console.error("message did not make to the broker");
-                if (waitErr instanceof Error) console.error(waitErr.message);
-            }
+        // const confirmMap = new Map();
 
+        while (messages.length > 0) {
+            const index = messages.length - 1;
+            const message = messages.pop();
+            // confirmMap.set(index, message);
+
+            channel.sendToQueue(queue, Buffer.from(message));
+            console.log("[x] [%s] sent", message);
+        }
+
+        channel.waitForConfirms((err) => {
+            if (err) throw err;
             connection.close();
         });
-
-        console.log("all messages were processed");
     });
 });
