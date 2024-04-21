@@ -1,0 +1,42 @@
+{
+  message: 'errors in my log!',
+  level: 'error',
+  service: 'user-service',
+  label: 'top',
+  timestamp: '2024-04-21T22:51:18.065Z'
+}
+{
+  message: 'warning me about logs',
+  level: 'warn',
+  service: 'user-service',
+  label: 'top',
+  timestamp: '2024-04-21T22:51:18.069Z'
+}
+{
+  message: 'info logging!',
+  level: 'info',
+  service: 'user-service',
+  label: 'top',
+  timestamp: '2024-04-21T22:51:18.069Z'
+}
+{
+  message: 'what?!',
+  level: 'http',
+  service: 'user-service',
+  label: 'top',
+  timestamp: '2024-04-21T22:51:18.070Z'
+}
+{
+  message: 'do you even log?',
+  level: 'silly',
+  service: 'user-service',
+  label: 'top',
+  timestamp: '2024-04-21T22:51:18.070Z'
+}
+{
+  message: 'a new one',
+  level: 'info',
+  mission: 'zeta',
+  label: 'top',
+  timestamp: '2024-04-21T22:51:18.070Z'
+}

@@ -1,0 +1,7 @@
+{
+  message: 'errors in my log!',
+  level: 'error',
+  service: 'user-service',
+  label: 'top',
+  timestamp: '2024-04-21T22:51:18.065Z'
+}
