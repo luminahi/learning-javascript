@@ -5,4 +5,6 @@ playground/
 out.js
 *.bin
 *.txt
-
+.vscode/
+*.proto
+data.json
