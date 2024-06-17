@@ -9,4 +9,4 @@ out.js
 data.json
 
 *.txt
-*.txt.gz
+*.gz
