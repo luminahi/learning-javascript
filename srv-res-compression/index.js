@@ -1,12 +1,7 @@
 import { createReadStream } from "fs";
 import { createServer } from "http";
 import { createGzip } from "zlib";
-import path from "path";
-import { fileURLToPath } from "url";
-
-function getPath(filename) {
-    return path.join(path.dirname(fileURLToPath(import.meta.url)), filename);
-}
+import { getFilePath } from "../util/helper.js";
 
 /**
  * Reads the content of the specified file, compresses the
@@ -15,7 +10,7 @@ function getPath(filename) {
  * @returns A gzip instance containing the compressed data.
  */
 function compressData(filename) {
-    const filepath = getPath(filename);
+    const filepath = getFilePath(filename, import.meta.url);
     const readStream = createReadStream(filepath, { encoding: "utf-8" });
 
     const gzip = createGzip();
