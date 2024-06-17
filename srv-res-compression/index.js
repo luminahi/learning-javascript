@@ -9,9 +9,10 @@ function getPath(filename) {
 }
 
 /**
- * Open a file with the provided filename and compress their data.
+ * Reads the content of the specified file, compresses the
+ * data using Gzip and returns a Gzip instance.
  * @param {string} filename
- * @returns a Gzip instance
+ * @returns A gzip instance containing the compressed data.
  */
 function compressData(filename) {
     const filepath = getPath(filename);
@@ -27,7 +28,10 @@ const server = createServer((_req, res) => {
     res.setHeader("Content-Encoding", "gzip");
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
     res.statusCode = 200;
-    compressData("data.txt").pipe(res);
+
+    const data = compressData("data.txt");
+
+    data.pipe(res);
 });
 
 server.listen(3000, () => {
